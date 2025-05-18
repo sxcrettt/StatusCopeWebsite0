@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - StatusCope</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('background.png') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            color: white;
+        }
+
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    background: transparent !important; 
+}
+
+
+.sidebar {
+    width: 250px;
+    background-color: #008cba ;
+    color: white; /* Text color is white, which should contrast well with a dark background */
+    padding: 20px;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: center;  /* Center horizontally */
+    align-items: center;      /* Center vertically */
+    height: 80px;             /* Set a fixed height for the header */
+    margin-bottom: -10px;      /* Space below the header */
+    margin-top: -10px;
+}
+
+.sidebar h2 {
+    color: white;             /* Ensure the text is white */
+    font-size: 1.8em;         /* Adjust the font size */
+    text-align: center;       /* Ensure the text is centered */
+    margin: 0;                /* Remove any default margin */
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar a i {
+    margin-right: 10px;
+}
+
+.sidebar li.active a,
+.sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+    background-color: var(--background-color);
+}
+
+        /* Content area */
+        .content {
+            margin-left: 250px; /* Ensure space for the sidebar */
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* About Us section */
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            text-align: center;
+            color: black;
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #2596be;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .team-member {
+            margin: 10px 0;
+        }
+
+        .member-btn {
+            width: 100%;
+            text-align: left;
+            background: #2596be;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .member-btn:hover {
+            background: #1e7a9b;
+            transform: scale(1.03);
+        }
+
+        .member-info {
+            display: none;
+            background: #f8f9fa;
+            padding: 15px;
+            margin-top: 5px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            display: none;
+            align-items: center;
+        }
+
+        .member-info img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 3px solid #2596be;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: #2596be;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #1e7a9b;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 992px) {
+    .sidebar {
+        width: 100%; /* Full width on small screens */
+        padding: 15px;
+    }
+}
+    </style>
+</head>
+<body>
+        <div class="dashboard-container">
+            <nav class="sidebar">
+                <div class="sidebar-header">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2>StatusCope</h2>
+                </div>
+                <ul id="sidebarMenu">
+                    <li><a href="patient-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="pages/chat.html"><i class="fas fa-comments"></i> Messages</a></li>
+                    <li><a href="heart-report.html"><i class="fas fa-heartbeat"></i> Heart Report</a></li>
+                    <li class="active"><a href="aboutus.html"><i class="fas fa-child"></i> About Us</a></li>
+                    <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+
+    <div class="content">
+        <div class="container">
+            <h2>About Us</h2>
+            <p><strong>Meet the Team Behind Statuscope</strong></p>
+            <div class="team-member">
+                <button class="member-btn" onclick="toggleInfo('arwen')">Gerianna Arwen A. Dulutan</button>
+                <div id="arwen" class="member-info">
+                    <img src="arwen.jpg" alt="Arwen">
+                    <div class="info-text">
+                        <h4>Gerianna Arwen A. Dulutan</h4>
+                        <p>Lead Developer</p>
+                        <p>Gerianna Arwen A. Dulutan is a STEM  senior high school student from STI College - Balayan. With her utmost passion in sciences and helping others, she showed compassion in creating StatusCope: A Smart Stethoscope. She is currently the leader and the hardware developer of the said product. She is responsibl  for the fabrication and creation of the product. Through her dedication, StatusCope becomes a success.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="team-member">
+                <button class="member-btn" onclick="toggleInfo('jayar')">Jay Ar M. Pesino</button>
+                <div id="jayar" class="member-info">
+                    <img src="jayar.jpg" alt="jayar">
+                    <div class="info-text">
+                        <h4>Jay Ar M. Pesino</h4>
+                        <p>Web Developer</p>
+                        <p>Jay Ar M. Pesino, a STEM senior high school student from STI College - Balayan, is the creative force behind the StatusCope website. As the lead web developer, he designed and built the platform, demonstrating his technical skills and commitment to making transmission of data from hardware to software and telemedicine accessible. His work was vital to StatusCope's online reach.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="team-member">
+                <button class="member-btn" onclick="toggleInfo('marielle')">Marielle C. Corrado</button>
+                <div id="marielle" class="member-info">
+                    <img src="marielle.jpg" alt="Marielle">
+                    <div class="info-text">
+                        <h4>Marielle C. Corrado</h4>
+                        <p>UI/UX Web Layout</p>
+                        <p>Marielle C. Corrado, a STEM senior high school student from STI College - Balayan, is responsible for the UI/UX design of the StatusCope website. She designed and created the visual layout, contributing to the platform's accessibility and ease of use.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="team-member">
+                <button class="member-btn" onclick="toggleInfo('zeanne')">Zeanne V. Salanguit</button>
+                <div id="zeanne" class="member-info">
+                    <img src="zeanne.jpg" alt="Zeanne">
+                    <div class="info-text">
+                        <h4>Zeanne V. Salanguit</h4>
+                        <p>UI/UX Web Design</p>
+                        <p>Zeanne V. Salanguit is a STEM senior high school student from STI College - Balayan. She is one of the artists behind the telemedicine platform of StatusCope. Her designing vision helps in making the product aesthetically pleasing yet way of convenience to the users.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="team-member">
+                <button class="member-btn" onclick="toggleInfo('newmember')">Aravela C. Ata</button>
+                <div id="newmember" class="member-info">
+                    <img src="aravela.jpg" alt="New Member">
+                    <div class="info-text">
+                        <h4>Aravela C. Ata</h4>
+                        <p>Hardware Developer</p>
+                        <p>Aravela C. Ata is a STEM senior high student in STI College - Balayan. A crucial hardware developer for the StatusCope telemedicine platform. Her passion for technology and its application in healthcare drives her work in fabricating and creating the platform's hardware, supporting its goal of accessible telemedicine. </p>
+                    </div>
+                </div>
+            </div>
+
+    <script>
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                console.error('Error signing out:', error);
+            });
+        }
+
+        const memberBtns = document.querySelectorAll('.member-btn');
+        memberBtns.forEach(button => {
+            button.addEventListener('click', function() {
+                const info = this.nextElementSibling;
+                info.style.display = (info.style.display === 'block' ? 'none' : 'block');
+            });
+        });
+    </script>
+</body>
+</html>

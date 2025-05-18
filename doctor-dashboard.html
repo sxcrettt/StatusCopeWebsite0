@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - Stelloscope</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+</head>
+<style>
+    /* Add expandable card styling */
+    .info-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .info-card {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .card-details {
+        display: none;
+        margin-top: 10px;
+        color: #333;
+    }
+    .statuscope-logo {
+  display: block;
+  margin: 10px auto;
+  max-width: 150px;
+}
+
+</style>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2>StatusCope</h2>
+            </div>
+            <ul id="sidebarMenu">
+                <li class="active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="pages/chat.html"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="aboutus.html"><i class="fas fa-child"></i> About Us</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+        
+        <main class="main-content">
+            <div class="content" id="content">
+                <img src="STATUSCOPELOGO.png" alt="StatusCope Logo" class="statuscope-logo">
+                <h2 class="statuscope-slogan">Your Heart's Health is all in your Hands</h2>
+
+            <h1>Doctor Dashboard</h1>
+            
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3>Patients</h3>
+                    <p id="patientCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Messages</h3>
+                    <p id="messageCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Appointments</h3>
+                    <p id="appointmentCount">0</p>
+                </div>
+            </div>
+
+    <!-- New expandable cards section -->
+    <h1>Information Card About StatusCope</h1>
+    <div class="info-cards">
+        <div class="info-card" onclick="toggleCard(this)">
+            <h3>More About Statuscope</h3>
+            <p class="card-summary">Click to see more...</p>
+            <div class="card-details">
+                <p>StatusCope is a smart stethoscope  design for self-monitoring heart health. The device upgrades conventional heart auscultation through the use of a piezo sensor to detect heart beats and present them onto an OLED display. The device records a phonocardiogram (PCG) and monitors beats per minute (BPM), enabling users to view their heart health in real-time. It transmits the captured data over Wi-Fi to a telemedicine cloud platform, allowing remote monitoring by physicians. This makes it possible for physicians to review the data remotely and provide early interventions if necessary. The device also protects against unauthorized data access, providing a dependable solution for patients and physicians to monitor heart health effectively.</p>
+            </div>
+        </div>
+        <div class="info-card" onclick="toggleCard(this)">
+            <h3>Heart Auscultation</h3>
+            <p class="card-summary">Click to see more...</p>
+            <div class="card-details">
+                <p>Heart auscultation is the use of a stethoscope to hear the sounds of the heart in order to identify any abnormalities or irregularities in the heartbeat. This technique assists physicians to screen for conditions like heart murmurs, irregular heart rhythms, or valve diseases. Through listening to heartbeats, medical professionals are able to evaluate the performance of the heart. It is a basic technique applied during physical examinations to know the condition of the cardiovascular system.</p>
+            </div>
+        </div>
+        <div class="info-card" onclick="toggleCard(this)">
+            <h3>Telemedicine</h3>
+            <p class="card-summary">Click to see more...</p>
+            <div class="card-details">
+                <p>Telemedicine has the potential to enhance healthcare access and address challenges related to technology accessibility and its integration into routine healthcare. It offers health services to people who have limited access to hospitals and live in remote areas. Consultations, diagnosis and monitoring to patients are all possible through telemedicine platforms. This provides convenience and saves time for patients in remote areas and service providers. Telemedicine continues to evolve, integrating new technologies and expanding its applications.</p>
+            </div>
+        </div>
+    </div>
+</main>
+</div>
+
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/doctor-dashboard.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const sidebarMenu = document.getElementById('sidebarMenu');
+            sidebarMenu.classList.toggle('show');
+        });
+        
+        // Logout function
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                console.error('Error signing out:', error);
+            });
+        }
+
+                // Toggle card visibility
+                function toggleCard(card) {
+            const details = card.querySelector('.card-details');
+            details.style.display = (details.style.display === 'block') ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html> 

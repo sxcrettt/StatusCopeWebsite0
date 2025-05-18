@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Heart Checkup Report</title>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background: url(background.png);
+      color: cyan;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: white;
+    }
+
+    .card {
+      background-color: white;
+      color: black;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 800px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    canvas {
+      max-width: 100%;
+    }
+
+    a {
+      color: cyan;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Heart Checkup Report</h1>
+  <div class="card">
+    <h2>BPM: <span id="bpm">--</span></h2>
+    <h2>Rhythm: <span id="rhythm">--</span></h2>
+    <canvas id="waveformChart" width="800" height="300"></canvas>
+  </div>
+
+  <a href="viewhistory.html">← Back to History</a>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBXvZIyjUY_ko1t-xQATxawFfNR-Fa5qEY",
+      authDomain: "statuscope-10086.firebaseapp.com",
+      databaseURL: "https://statuscope-10086-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "statuscope-10086",
+      storageBucket: "statuscope-10086.appspot.com",
+      messagingSenderId: "289714922875",
+      appId: "1:289714922875:web:65c833189e3044ee20c9de",
+      measurementId: "G-S6D6GZR550"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const params = new URLSearchParams(window.location.search);
+    const ts = params.get("ts");
+
+    const reportRef = db.ref(`recordings/${ts}`);
+
+    const ctx = document.getElementById("waveformChart").getContext("2d");
+    const waveformChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: Array.from({ length: 480 }, (_, i) => i),
+        datasets: [{
+          label: "Heart Sound Waveform",
+          data: Array(480).fill(0),
+          borderColor: "cyan",
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.3
+        }]
+      },
+      options: {
+        animation: false,
+        scales: {
+          y: {
+            suggestedMin: -100,
+            suggestedMax: 100
+          }
+        }
+      }
+    });
+
+    reportRef.once("value").then(snapshot => {
+      const data = snapshot.val();
+      if (data) {
+        document.getElementById("bpm").textContent = data.bpm ?? "--";
+        document.getElementById("rhythm").textContent = data.rhythm ?? "--";
+        if (Array.isArray(data.value)) {
+          waveformChart.data.datasets[0].data = data.value.slice(0, 480);
+          waveformChart.update();
+        }
+      } else {
+        alert("No data found for this timestamp.");
+      }
+    }).catch(err => {
+      console.error("Error fetching report:", err);
+      alert("Failed to load report.");
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - Stelloscope</title>
+    <link rel="stylesheet" href="../assets/css/chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="messenger-container">
+        <!-- Sidebar -->
+        <div class="messenger-sidebar">
+            <div class="user-profile">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="profile-info">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="profile-details">
+                        <h3 id="currentUser">Loading...</h3>
+                        <p id="userStatus">Offline</p>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation" id="sidebarMenu">
+                <a href="#" class="active" id="messagesLink">
+                    <i class="fas fa-comments"></i>
+                    <span>Messages</span>
+                </a>
+                <a href="#" id="logoutLink">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Contacts Panel -->
+        <div class="contacts-panel active">
+            <div class="contacts-header">
+                <h2 id="contactsTitle">Loading...</h2>
+                <button class="mobile-back-btn" id="mobileBackBtn" style="display: none;">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+            <div class="search-contacts">
+                <input type="text" id="searchContacts" placeholder="Search contacts...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="contacts-list" id="contactsList">
+                <div class="loading-contacts">
+                    <i class="fas fa-spinner fa-spin"></i> Loading contacts...
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Panel -->
+        <div class="chat-panel">
+            <div class="chat-header">
+                <button class="mobile-back-btn" id="mobileChatBackBtn" style="display: none;">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="chat-partner">
+                    <h3 id="chatPartner">Select a contact</h3>
+                    <p id="partnerStatus"></p>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input">
+                <button id="attachFile" class="attach-btn" title="Attach File">
+                    <i class="fas fa-paperclip"></i>
+                </button>
+                <button id="attachImage" class="attach-btn" title="Send Image">
+                    <i class="fas fa-image"></i>
+                </button>
+                <input type="file" id="fileInput" style="display: none;" accept=".pdf,.doc,.docx,.txt">
+                <input type="file" id="imageInput" style="display: none;" accept="image/*" capture="environment">
+                <textarea id="messageInput" placeholder="Type a message..."></textarea>
+                <button id="sendMessage">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Preview Modal -->
+    <div id="filePreviewModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>File Preview</h3>
+            <div id="filePreviewContent"></div>
+            <div class="file-info">
+                <p id="fileName"></p>
+                <p id="fileSize"></p>
+            </div>
+            <button id="sendFile" class="send-file-btn">Send File</button>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div class="image-preview-modal">
+        <img src="" alt="Preview">
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/chat.js"></script>
+    <script src="../assets/js/file-sharing.js"></script>
+    
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const sidebarMenu = document.getElementById('sidebarMenu');
+            sidebarMenu.classList.toggle('show');
+        });
+        
+        // Mobile back buttons
+        document.getElementById('mobileBackBtn').addEventListener('click', function() {
+            // Navigate back to the dashboard based on user role
+            const userRole = localStorage.getItem('userRole');
+            if (userRole === 'doctor') {
+                window.location.href = '../doctor-dashboard.html';
+            } else if (userRole === 'patient') {
+                window.location.href = '../patient-dashboard.html';
+            } else {
+                window.location.href = '../index.html';
+            }
+        });
+        
+        document.getElementById('mobileChatBackBtn').addEventListener('click', function() {
+            document.querySelector('.contacts-panel').classList.add('active');
+            document.querySelector('.chat-panel').classList.remove('active');
+        });
+    </script>
+</body>
+</html>

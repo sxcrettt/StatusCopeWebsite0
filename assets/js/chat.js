@@ -311,6 +311,9 @@ function loadChatMessages(partnerId) {
     const chatId = [currentUser.uid, partnerId].sort().join('_');
     debug(`Chat ID: ${chatId}`);
     
+    // Set the chat ID on the chat panel
+    document.querySelector('.chat-panel').dataset.chatId = chatId;
+    
     // Listen to messages in real-time
     chatListener = firebase.firestore().collection('chats')
         .doc(chatId)

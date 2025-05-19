@@ -220,5 +220,24 @@ class FileSharing {
 
 // Initialize file sharing when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    window.fileSharing = new FileSharing();
-}); 
+    try {
+        debug('Initializing FileSharing...');
+        window.fileSharing = new FileSharing();
+        debug('FileSharing initialized successfully');
+    } catch (error) {
+        console.error('Error initializing FileSharing:', error);
+        debug(`Error initializing FileSharing: ${error.message}`);
+    }
+});
+
+// Add debug function if not already defined
+if (typeof debug !== 'function') {
+    function debug(message, data = null) {
+        const timestamp = new Date().toISOString();
+        const logMessage = `[DEBUG][${timestamp}] ${message}`;
+        console.log(logMessage);
+        if (data) {
+            console.log('Data:', data);
+        }
+    }
+} 
